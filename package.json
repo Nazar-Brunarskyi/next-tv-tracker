@@ -3,20 +3,30 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3005",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.10",
+    "@mui/styled-engine-sc": "^5.14.10",
     "@types/node": "20.6.3",
     "@types/react": "18.2.22",
     "@types/react-dom": "18.2.7",
+    "axios": "^1.5.0",
     "eslint": "8.49.0",
     "eslint-config-next": "13.5.2",
+    "firebase": "^10.4.0",
     "next": "13.5.2",
+    "next-auth": "^4.23.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-firebase-hooks": "^5.1.1",
+    "react-hook-form": "^7.46.2",
+    "styled-components": "^5.3.11",
     "typescript": "5.2.2"
   }
 }

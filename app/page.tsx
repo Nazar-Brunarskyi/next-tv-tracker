@@ -1,95 +1,59 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+'use client';
+import { useEffect, useState } from "react";
+import { auth } from "./firebase";
+import { Button } from "@mui/material";
+import { showsApi } from "@/API/shows/showApi";
+import { authApi } from "@/API/auth/authApi";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
+import Link from "next/link";
+
 
 export default function Home() {
+  const [text, setText] = useState('');
+  const logOut = async () => {
+    await authApi.logOut();
+  }
+
+  const getText = async () => {
+    const text = await showsApi.test();
+    setText(text)
+  }
+  // const getCookie = (name: string) => {
+  //   const cookieArray = document.cookie.split('; ');
+  
+  //   for (let i = 0; i < cookieArray.length; i++) {
+  //     const cookiePair = cookieArray[i].split('=');
+  
+  //     if (name === decodeURIComponent(cookiePair[0])) {
+  //       return decodeURIComponent(cookiePair[1]);
+  //     }
+  //   }
+  
+  //   return null;
+  // }
+
+  // useEffect(() => {
+  //   console.log(getCookie('redirectedFrom'));
+  // },[])
+  
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    <>
+      <h1>you are loged in</h1>
+      <Button onClick={logOut}>
+        log Out
+      </Button>
+      <h2>{text}</h2>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+      <Button onClick={getText}>
+        get text
+      </Button>
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+      <Link href={'/shows'}>
+        Shows
+      </Link>
+    </>
   )
 }
+
+Home.requireAuth = true;
